@@ -10,11 +10,9 @@ import WatchConnectivity
 import Combine
 
 class WatchSessionManager: NSObject, ObservableObject, WCSessionDelegate {
-    @Published var counter: Int = 0
+    private var session: WCSession { WCSession.default }
     
-    private var session: WCSession {
-        WCSession.default
-    }
+    @Published var counter: Int = 0
     
     func activate() {
         if WCSession.isSupported() {

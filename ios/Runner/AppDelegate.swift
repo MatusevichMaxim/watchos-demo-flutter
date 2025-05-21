@@ -4,6 +4,8 @@ import WatchConnectivity
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
+    private var session: WCSession { WCSession.default }
+    
     var channel: FlutterMethodChannel?
     
     override func application(
@@ -12,8 +14,8 @@ import WatchConnectivity
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
         if WCSession.isSupported() {
-            WCSession.default.delegate = self
-            WCSession.default.activate()
+            session.delegate = self
+            session.activate()
         }
         
         initFlutterChannel()
@@ -36,8 +38,8 @@ import WatchConnectivity
     }
     
     private func sendToWatch(value: Int) {
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(["value": value], replyHandler: nil, errorHandler: nil)
+        if session.isReachable {
+            session.sendMessage(["value": value], replyHandler: nil, errorHandler: nil)
         }
     }
 }
